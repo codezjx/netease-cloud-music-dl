@@ -1,32 +1,14 @@
 # -*- coding: utf-8 -*-
 import argparse
 import os
-import config
 
-from api import CloudApi
-from downloader import download_song_by_id
-from downloader import download_song_by_song
+from ncm import config
+from ncm.api import CloudApi
+from ncm.downloader import download_song_by_id
+from ncm.downloader import download_song_by_song
 
 # load the config first
 config.load_config()
-print('max:', config.DOWNLOAD_HOT_MAX)
-print('dir:', config.DOWNLOAD_DIR)
-print('name_type:', config.SONG_NAME_TYPE)
-print('folder_type:', config.SONG_FOLDER_TYPE)
-
-
-parser = argparse.ArgumentParser(description='Welcome to netease cloud music downloader!')
-parser.add_argument('-s', metavar='song_id', dest='song_id',
-                    help='Download a song by song_id')
-parser.add_argument('-ss', metavar='song_ids', dest='song_ids', nargs='+',
-                    help='Download a song list, song_id split by space')
-parser.add_argument('-hot', metavar='artist_id', dest='artist_id',
-                    help='Download an artist hot 50 songs by artist_id')
-parser.add_argument('-a', metavar='album_id', dest='album_id',
-                    help='Download an album all songs by album_id')
-parser.add_argument('-p', metavar='playlist_id', dest='playlist_id',
-                    help='Download a playlist all songs by playlist_id')
-args = parser.parse_args()
 api = CloudApi()
 
 
@@ -57,17 +39,34 @@ def download_playlist_songs(playlist_id):
         download_song_by_song(song, folder_path)
 
 
-if args.song_id:
-    download_song_by_id(args.song_id, config.DOWNLOAD_DIR)
-elif args.song_ids:
-    for song_id in args.song_ids:
-        download_song_by_id(song_id, config.DOWNLOAD_DIR)
-elif args.artist_id:
-    download_hot_songs(args.artist_id)
-elif args.album_id:
-    download_album_songs(args.album_id)
-elif args.playlist_id:
-    download_playlist_songs(args.playlist_id)
+def main():
+    parser = argparse.ArgumentParser(description='Welcome to netease cloud music downloader!')
+    parser.add_argument('-s', metavar='song_id', dest='song_id',
+                        help='Download a song by song_id')
+    parser.add_argument('-ss', metavar='song_ids', dest='song_ids', nargs='+',
+                        help='Download a song list, song_id split by space')
+    parser.add_argument('-hot', metavar='artist_id', dest='artist_id',
+                        help='Download an artist hot 50 songs by artist_id')
+    parser.add_argument('-a', metavar='album_id', dest='album_id',
+                        help='Download an album all songs by album_id')
+    parser.add_argument('-p', metavar='playlist_id', dest='playlist_id',
+                        help='Download a playlist all songs by playlist_id')
+    args = parser.parse_args()
+    if args.song_id:
+        download_song_by_id(args.song_id, config.DOWNLOAD_DIR)
+    elif args.song_ids:
+        for song_id in args.song_ids:
+            download_song_by_id(song_id, config.DOWNLOAD_DIR)
+    elif args.artist_id:
+        download_hot_songs(args.artist_id)
+    elif args.album_id:
+        download_album_songs(args.album_id)
+    elif args.playlist_id:
+        download_playlist_songs(args.playlist_id)
+
+
+if __name__ == '__main__':
+    main()
 
 
 # song = api.get_song('464035731')

@@ -2,13 +2,13 @@
 
 import requests
 
-from encrypt import encrypted_request
-from constants import headers
-from constants import song_download_url
-from constants import get_song_url
-from constants import get_album_url
-from constants import get_artist_url
-from constants import get_playlist_url
+from ncm.encrypt import encrypted_request
+from ncm.constants import headers
+from ncm.constants import song_download_url
+from ncm.constants import get_song_url
+from ncm.constants import get_album_url
+from ncm.constants import get_artist_url
+from ncm.constants import get_playlist_url
 
 
 class CloudApi(object):

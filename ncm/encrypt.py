@@ -6,7 +6,7 @@ import json
 import binascii
 from Crypto.Cipher import AES
 
-from constants import modulus, nonce, pub_key
+from ncm.constants import modulus, nonce, pub_key
 
 
 def encrypted_request(text):

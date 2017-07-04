@@ -3,8 +3,8 @@
 import os
 import requests
 
-from api import CloudApi
-from file_util import add_metadata_to_song
+from ncm.api import CloudApi
+from ncm.file_util import add_metadata_to_song
 
 
 def download_song_by_id(song_id, download_folder):
