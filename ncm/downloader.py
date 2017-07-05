@@ -24,13 +24,14 @@ def download_song_by_song(song, download_folder):
 
     # download song
     song_url = api.get_song_url(song_id)
-    print('song url is:', song_url)
-    download_file(song_url, song_file_name, download_folder)
+    is_already_download = download_file(song_url, song_file_name, download_folder)
+    if is_already_download:
+        print('Mp3 file already download:', song_file_name)
+        return
 
     # download cover
     cover_url = song['album']['blurPicUrl']
     cover_file_name = 'cover_{}.jpg'.format(song_id)
-    print('cover url:', cover_url)
     download_file(cover_url, cover_file_name, download_folder)
 
     # add metadata for song
@@ -48,9 +49,13 @@ def download_file(file_url, file_name, folder):
         os.makedirs(folder)
     file_path = os.path.join(folder, file_name)
 
-    # if not os.path.exists(file_path):
     response = requests.get(file_url, stream=True)
     length = int(response.headers.get('Content-Length'))
+
+    # TODO need to improve whether the file exists
+    if os.path.exists(file_path) and os.path.getsize(file_path) > length:
+        return True
+
     progress = ProgressBar(file_name, length)
 
     with open(file_path, 'wb') as file:
@@ -58,6 +63,7 @@ def download_file(file_url, file_name, folder):
             if buffer:
                 file.write(buffer)
                 progress.refresh(len(buffer))
+    return False
 
 
 class ProgressBar(object):
