@@ -3,28 +3,49 @@
 import os
 import requests
 
+from ncm import config
 from ncm.api import CloudApi
 from ncm.file_util import add_metadata_to_song
 
 
-def download_song_by_id(song_id, download_folder):
+def download_song_by_id(song_id, download_folder, sub_folder=True):
     # get song info
     api = CloudApi()
     song = api.get_song(song_id)
-    download_song_by_song(song, download_folder)
+    download_song_by_song(song, download_folder, sub_folder)
 
 
-def download_song_by_song(song, download_folder):
+def download_song_by_song(song, download_folder, sub_folder=True):
     # get song info
     api = CloudApi()
     song_id = song['id']
     song_name = song['name']
     artist_name = song['artists'][0]['name']
-    song_file_name = '{}_{}.mp3'.format(artist_name, song_name)
+    album_name = song['album']['name']
+
+    # update song file name by config
+    song_file_name = '{}.mp3'.format(song_name)
+    switcher_song = {
+        1: song_file_name,
+        2: '{} - {}.mp3'.format(artist_name, song_name),
+        3: '{} - {}.mp3'.format(song_name, artist_name)
+    }
+    song_file_name = switcher_song.get(config.SONG_NAME_TYPE, song_file_name)
+
+    # update song folder name by config, if support sub folder
+    if sub_folder:
+        switcher_folder = {
+            1: download_folder,
+            2: os.path.join(download_folder, artist_name),
+            3: os.path.join(download_folder, artist_name, album_name),
+        }
+        song_download_folder = switcher_folder.get(config.SONG_FOLDER_TYPE, download_folder)
+    else:
+        song_download_folder = download_folder
 
     # download song
     song_url = api.get_song_url(song_id)
-    is_already_download = download_file(song_url, song_file_name, download_folder)
+    is_already_download = download_file(song_url, song_file_name, song_download_folder)
     if is_already_download:
         print('Mp3 file already download:', song_file_name)
         return
@@ -32,11 +53,11 @@ def download_song_by_song(song, download_folder):
     # download cover
     cover_url = song['album']['blurPicUrl']
     cover_file_name = 'cover_{}.jpg'.format(song_id)
-    download_file(cover_url, cover_file_name, download_folder)
+    download_file(cover_url, cover_file_name, song_download_folder)
 
     # add metadata for song
-    song_file_path = os.path.join(download_folder, song_file_name)
-    cover_file_path = os.path.join(download_folder, cover_file_name)
+    song_file_path = os.path.join(song_download_folder, song_file_name)
+    cover_file_path = os.path.join(song_download_folder, cover_file_name)
     add_metadata_to_song(song_file_path, cover_file_path, song)
 
     # delete cover file

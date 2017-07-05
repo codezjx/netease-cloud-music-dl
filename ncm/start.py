@@ -14,29 +14,29 @@ api = CloudApi()
 
 def download_hot_songs(artist_id):
     songs = api.get_hot_songs(artist_id)
-    folder_name = songs[0]['artists'][0]['name'] + '_hot50'
+    folder_name = songs[0]['artists'][0]['name'] + ' - hot50'
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     for i, song in enumerate(songs):
         print(str(i + 1) + ' song name:' + song['name'])
-        download_song_by_song(song, folder_path)
+        download_song_by_song(song, folder_path, False)
 
 
 def download_album_songs(album_id):
     songs = api.get_album_songs(album_id)
-    folder_name = songs[0]['artists'][0]['name'] + '_' + songs[0]['album']['name']
+    folder_name = songs[0]['album']['name'] + ' - album'
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     for i, song in enumerate(songs):
         print(str(i + 1) + ' song name:' + song['name'])
-        download_song_by_song(song, folder_path)
+        download_song_by_song(song, folder_path, False)
 
 
 def download_playlist_songs(playlist_id):
     songs, playlist_name = api.get_playlist_songs(playlist_id)
-    folder_name = 'playlist_' + playlist_name
+    folder_name = playlist_name + ' - playlist'
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     for i, song in enumerate(songs):
         print(str(i + 1) + ' song name:' + song['name'])
-        download_song_by_song(song, folder_path)
+        download_song_by_song(song, folder_path, False)
 
 
 def main():
