@@ -45,6 +45,9 @@ def download_song_by_song(song, download_folder, sub_folder=True):
 
     # download song
     song_url = api.get_song_url(song_id)
+    if song_url is None:
+        print('Song <<{}>> is not available due to copyright issue!'.format(song_name))
+        return
     is_already_download = download_file(song_url, song_file_name, song_download_folder)
     if is_already_download:
         print('Mp3 file already download:', song_file_name)

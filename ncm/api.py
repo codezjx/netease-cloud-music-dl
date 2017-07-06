@@ -71,10 +71,7 @@ class CloudApi(object):
         params = {'ids': [song_id], 'br': bit_rate, 'csrf_token': csrf}
         result = self.post_request(url, params)
         song_url = result['data'][0]['url']
-        if song_url is None:
-            print('Song {} is not available due to copyright issue. => {}'.format(song_id, result))
-        else:
-            return song_url
+        return song_url
 
     def get_hot_songs(self, artist_id):
         """
