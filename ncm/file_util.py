@@ -1,9 +1,22 @@
 # -*- coding: utf-8 -*-
 
-from mutagen.id3 import ID3, APIC, TPE1, TIT2, TALB
+from mutagen.mp3 import MP3
+from mutagen.id3 import ID3, APIC, TPE1, TIT2, TALB, error
 
 
 def add_metadata_to_song(file_path, cover_path, song):
+    # If no ID3 tags in mp3 file
+    audio = MP3(file_path, ID3=ID3)
+    if audio.tags is None:
+        print('No ID3 tag, trying to add one!')
+        try:
+            audio.add_tags()
+            audio.save()
+        except error as e:
+            print('Error occur when add tags:', str(e))
+            return
+
+    # Modify ID3 tags
     id3 = ID3(file_path)
     # add album cover
     id3.add(
