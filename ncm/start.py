@@ -16,7 +16,8 @@ def download_hot_songs(artist_id):
     songs = api.get_hot_songs(artist_id)
     folder_name = songs[0]['artists'][0]['name'] + ' - hot50'
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
-    for i, song in enumerate(songs):
+    download_count = config.DOWNLOAD_HOT_MAX if (0 < config.DOWNLOAD_HOT_MAX < 50) else config.DOWNLOAD_HOT_MAX_DEFAULT
+    for i, song in zip(range(download_count), songs):
         print(str(i + 1) + ' song name:' + song['name'])
         download_song_by_song(song, folder_path, False)
 
