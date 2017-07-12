@@ -18,6 +18,11 @@ def add_metadata_to_song(file_path, cover_path, song):
 
     # Modify ID3 tags
     id3 = ID3(file_path)
+    # Remove old 'APIC' frame
+    # Because two 'APIC' may exist together with the different description
+    # For more information visit: http://mutagen.readthedocs.io/en/latest/user/id3.html
+    if id3.getall('APIC'):
+        id3.delall('APIC')
     # add album cover
     id3.add(
         APIC(
