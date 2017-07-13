@@ -2,6 +2,7 @@
 import argparse
 import os
 
+from urllib.parse import urlparse, parse_qs
 from ncm import config
 from ncm.api import CloudApi
 from ncm.downloader import download_song_by_id
@@ -40,6 +41,14 @@ def download_playlist_songs(playlist_id):
         download_song_by_song(song, folder_path, False)
 
 
+def get_parse_id(song_id):
+    # Parse the url
+    if song_id.startswith('http'):
+        # Not allow fragments, we just need to parse the query string
+        return parse_qs(urlparse(song_id, allow_fragments=False).query)['id'][0]
+    return song_id
+
+
 def main():
     parser = argparse.ArgumentParser(description='Welcome to netease cloud music downloader!')
     parser.add_argument('-s', metavar='song_id', dest='song_id',
@@ -54,16 +63,16 @@ def main():
                         help='Download a playlist all songs by playlist_id')
     args = parser.parse_args()
     if args.song_id:
-        download_song_by_id(args.song_id, config.DOWNLOAD_DIR)
+        download_song_by_id(get_parse_id(args.song_id), config.DOWNLOAD_DIR)
     elif args.song_ids:
         for song_id in args.song_ids:
-            download_song_by_id(song_id, config.DOWNLOAD_DIR)
+            download_song_by_id(get_parse_id(song_id), config.DOWNLOAD_DIR)
     elif args.artist_id:
-        download_hot_songs(args.artist_id)
+        download_hot_songs(get_parse_id(args.artist_id))
     elif args.album_id:
-        download_album_songs(args.album_id)
+        download_album_songs(get_parse_id(args.album_id))
     elif args.playlist_id:
-        download_playlist_songs(args.playlist_id)
+        download_playlist_songs(get_parse_id(args.playlist_id))
 
 
 if __name__ == '__main__':
