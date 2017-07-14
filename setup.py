@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='netease-cloud-music-dl',
-    version='0.0.1',
+    version='0.2.0',
     packages=find_packages(),
     install_requires=[
         'requests>=2.17.3',
@@ -17,10 +17,10 @@ setup(
         ]
     },
 
-    license='Apache License V2',
+    license='Mit',
     author='codezjx',
     author_email='code.zjx@gmail.com',
     url='https://github.com/codezjx/netease-cloud-music-dl',
-    description='Netease cloud music downloader, with full ID3 metadata!',
-    keywords=['ncm', 'cloud-music', 'downloader'],
+    description='Netease cloud music song downloader, with full ID3 metadata!',
+    keywords=['ncm', 'netease', 'cloud-music', 'downloader'],
 )
