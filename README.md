@@ -3,6 +3,10 @@
 
 ## Installation
 
+若没有安装Python3，请先到官网下载并安装：
+> https://www.python.org/download/releases/3.0/
+
+
 首先下载源码：
 ```bash
 $ git clone https://github.com/codezjx/netease-cloud-music-dl.git
@@ -10,7 +14,7 @@ $ git clone https://github.com/codezjx/netease-cloud-music-dl.git
 
 进入根目录，然后执行：
 ```bash
-$ python3 setup.py install
+$ python setup.py install
 ```
 
 最终显示以下log，表示顺利安装：
@@ -26,6 +30,17 @@ Finished processing dependencies for netease-cloud-music-dl==x.x.x
 后续直接在命令行中通过`ncm`指令即可快速调用相关功能，**Warning: 目前只支持Python3.x版本**
 
 ## Feature
+- 支持下载专辑封面并嵌入MP3文件
+- 支持写入歌手名、音乐标题、专辑名等信息至[ID3 Tags][1]
+- 支持跳过已下载的音频文件
+- 支持常见设置选项，如：保存路径、音乐命名格式、文件智能分类等
+- 默认下载比特率为320k的高品质音乐（若木有320k则会自动下载最高比特率）
+- 支持下载单首/多首歌曲
+- 支持下载歌手热门单曲（可配置最大下载数）
+- 支持下载专辑所有歌曲
+- 支持下载公开歌单所有歌曲
+
+**（注意：已下架的音乐暂时无法下载）**
 
 通过`ncm -h`即可查看所支持的参数列表：
 ```
