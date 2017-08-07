@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from mutagen.mp3 import MP3
+from mutagen.mp3 import MP3, HeaderNotFoundError
 from mutagen.id3 import ID3, APIC, TPE1, TIT2, TALB, error
 
 
 def add_metadata_to_song(file_path, cover_path, song):
     # If no ID3 tags in mp3 file
-    audio = MP3(file_path, ID3=ID3)
+    try:
+        audio = MP3(file_path, ID3=ID3)
+    except HeaderNotFoundError:
+        print('Can\'t sync to MPEG frame, not an validate MP3 file!')
+        return
+
     if audio.tags is None:
         print('No ID3 tag, trying to add one!')
         try:
