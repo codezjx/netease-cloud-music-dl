@@ -1,6 +1,9 @@
 # 网易云音乐下载器
 基于Python3.X编写的网易云音乐命令行下载器，自动下载专辑封面，记录歌手名、音乐标题、专辑名等元数据，并写入[ID3 Tags][1] metadata容器。在github上试了几个高星的下载器都没有写入专辑封面，对于强迫症患者简直不能忍，于是一怒之下决定自己写。
 
+## Preview
+![Preview](preview.gif)
+
 ## Installation
 
 若没有安装Python3，请先到官网下载并安装：
