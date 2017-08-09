@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import pathlib
 
 from configparser import ConfigParser
 
@@ -10,7 +11,7 @@ _CONFIG_KEY_SONG_NAME_TYPE = 'song.name_type'
 _CONFIG_KEY_SONG_FOLDER_TYPE = 'song.folder_type'
 
 # Base path
-_CONFIG_MAIN_PATH = os.path.join(os.getenv('HOME'), '.ncm')
+_CONFIG_MAIN_PATH = os.path.join(pathlib.Path.home(), '.ncm')
 _CONFIG_FILE_PATH = os.path.join(_CONFIG_MAIN_PATH, 'ncm.ini')
 _DEFAULT_DOWNLOAD_PATH = os.path.join(_CONFIG_MAIN_PATH, 'download')
 
