@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import requests
 
 from ncm import config
@@ -19,7 +20,7 @@ def download_song_by_song(song, download_folder, sub_folder=True):
     # get song info
     api = CloudApi()
     song_id = song['id']
-    song_name = song['name'].replace('/', '-')    # Replace '/' with '-', open() method not support '/' yet!
+    song_name = re.sub(r'[\\/:*?"<>|]', ' ', song['name'])    # Replace illegal character with ' '
     artist_name = song['artists'][0]['name']
     album_name = song['album']['name']
 
