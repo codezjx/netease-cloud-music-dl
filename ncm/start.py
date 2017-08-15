@@ -20,7 +20,7 @@ def download_hot_songs(artist_id):
     download_count = config.DOWNLOAD_HOT_MAX if (0 < config.DOWNLOAD_HOT_MAX < 50) else config.DOWNLOAD_HOT_MAX_DEFAULT
     for i, song in zip(range(download_count), songs):
         print(str(i + 1) + ' song name:' + song['name'])
-        download_song_by_song(song, folder_path, False)
+        download_song_by_song(song, folder_path, songs[0]['artists'][0]['name'], False)
 
 
 def download_album_songs(album_id):
@@ -29,7 +29,7 @@ def download_album_songs(album_id):
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     for i, song in enumerate(songs):
         print(str(i + 1) + ' song name:' + song['name'])
-        download_song_by_song(song, folder_path, False)
+        download_song_by_song(song, folder_path, songs[0]['album']['name'], False)
 
 
 def download_playlist_songs(playlist_id):
@@ -38,7 +38,7 @@ def download_playlist_songs(playlist_id):
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     for i, song in enumerate(songs):
         print(str(i + 1) + ' song name:' + song['name'])
-        download_song_by_song(song, folder_path, False)
+        download_song_by_song(song, folder_path, playlist_name, False)
 
 
 def get_parse_id(song_id):
@@ -63,10 +63,10 @@ def main():
                         help='Download a playlist all songs by playlist_id')
     args = parser.parse_args()
     if args.song_id:
-        download_song_by_id(get_parse_id(args.song_id), config.DOWNLOAD_DIR)
+        download_song_by_id(get_parse_id(args.song_id), config.DOWNLOAD_DIR, '')
     elif args.song_ids:
         for song_id in args.song_ids:
-            download_song_by_id(get_parse_id(song_id), config.DOWNLOAD_DIR)
+            download_song_by_id(get_parse_id(song_id), config.DOWNLOAD_DIR, '')
     elif args.artist_id:
         download_hot_songs(get_parse_id(args.artist_id))
     elif args.album_id:
