@@ -9,6 +9,7 @@ from ncm.constants import get_song_url
 from ncm.constants import get_album_url
 from ncm.constants import get_artist_url
 from ncm.constants import get_playlist_url
+from ncm.constants import get_lyric_url
 
 
 class CloudApi(object):
@@ -48,6 +49,21 @@ class CloudApi(object):
         result = self.get_request(url)
 
         return result['songs'][0]
+
+    def get_lyric(self, song_id):
+        """
+        Get song lyric by song id
+        :param song_id:
+        :return:
+        """
+        url = get_lyric_url(song_id)
+        result = self.get_request(url)
+        try:
+            return result['lrc']['lyric']
+        except:
+            return ''
+
+
 
     def get_album_songs(self, album_id):
         """
@@ -92,6 +108,3 @@ class CloudApi(object):
         url = get_playlist_url(playlist_id)
         result = self.get_request(url)
         return result['result']['tracks'], result['result']['name']
-
-
-

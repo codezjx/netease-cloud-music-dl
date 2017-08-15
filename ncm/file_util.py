@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from mutagen.mp3 import MP3, HeaderNotFoundError
-from mutagen.id3 import ID3, APIC, TPE1, TIT2, TALB, error
+from mutagen.id3 import ID3, APIC, TPE1, TIT2, TALB, TCON, USLT, SYLT, error
 
 
-def add_metadata_to_song(file_path, cover_path, song):
+def add_metadata_to_song(file_path, cover_path, song, gener, lyric):
     # If no ID3 tags in mp3 file
     try:
         audio = MP3(file_path, ID3=ID3)
@@ -42,6 +42,22 @@ def add_metadata_to_song(file_path, cover_path, song):
         TPE1(
             encoding=3,
             text=song['artists'][0]['name']
+        )
+    )
+    # add genre
+    id3.add(
+        TCON(
+            encoding=3,
+            text=gener
+        )
+    )
+    # add lyric
+    id3.add(
+        USLT(
+            encoding=3,
+            lang='XXX',
+            desc=lyric,
+            text=lyric
         )
     )
     # add song name

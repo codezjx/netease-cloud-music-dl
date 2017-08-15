@@ -30,3 +30,6 @@ def get_artist_url(artist_id):
 
 def get_playlist_url(playlist_id):
     return 'http://music.163.com/api/playlist/detail?id={}'.format(playlist_id)
+
+def get_lyric_url(song_id):
+    return 'http://music.163.com/api/song/lyric?id={}&lv=1'.format(song_id)
