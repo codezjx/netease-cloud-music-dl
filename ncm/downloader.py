@@ -59,7 +59,7 @@ def download_song_by_song(song, download_folder, gener, sub_folder=True):
     cover_url = song['album']['blurPicUrl']
     cover_file_name = 'cover_{}.jpg'.format(song_id)
     download_file(cover_url, cover_file_name, song_download_folder)
-    write_file(lyric, '{} - {}.lrc'.format(song_name, artist_name), song_download_folder)
+    write_file(lyric, song_file_name.replace(".mp3", ".lrc"), song_download_folder)
     # add metadata for song
     song_file_path = os.path.join(song_download_folder, song_file_name)
     cover_file_path = os.path.join(song_download_folder, cover_file_name)
