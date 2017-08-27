@@ -99,12 +99,11 @@ class ProgressBar(object):
         self.count = 0
         self.prev_count = 0
         self.total = total
-        self.status = 'Downloading:'
         self.end_str = '\r'
 
     def __get_info(self):
-        return '[{}] {:.2f}KB, Progress: {:.2f}%'\
-            .format(self.file_name, self.total/1024, self.count/self.total*100)
+        return 'Progress: {:6.2f}%, {:8.2f}KB, [{:.30}]'\
+            .format(self.count/self.total*100, self.total/1024, self.file_name)
 
     def refresh(self, count):
         self.count += count
@@ -114,7 +113,6 @@ class ProgressBar(object):
             print(self.__get_info(), end=self.end_str)
         # Finish downloading
         if self.count >= self.total:
-            self.status = 'Downloaded:'
             self.end_str = '\n'
             print(self.__get_info(), end=self.end_str)
 

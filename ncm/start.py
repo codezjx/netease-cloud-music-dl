@@ -20,7 +20,7 @@ def download_hot_songs(artist_id):
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     download_count = config.DOWNLOAD_HOT_MAX if (0 < config.DOWNLOAD_HOT_MAX < 50) else config.DOWNLOAD_HOT_MAX_DEFAULT
     for i, song in zip(range(download_count), songs):
-        print(str(i + 1) + ' song name:' + song['name'])
+        print('{}: {}'.format(i + 1, song['name']))
         download_song_by_song(song, folder_path, False)
 
 
@@ -29,7 +29,7 @@ def download_album_songs(album_id):
     folder_name = format_string(songs[0]['album']['name']) + ' - album'
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     for i, song in enumerate(songs):
-        print(str(i + 1) + ' song name:' + song['name'])
+        print('{}: {}'.format(i + 1, song['name']))
         download_song_by_song(song, folder_path, False)
 
 
@@ -38,7 +38,7 @@ def download_playlist_songs(playlist_id):
     folder_name = format_string(playlist_name) + ' - playlist'
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     for i, song in enumerate(songs):
-        print(str(i + 1) + ' song name:' + song['name'])
+        print('{}: {}'.format(i + 1, song['name']))
         download_song_by_song(song, folder_path, False)
 
 
