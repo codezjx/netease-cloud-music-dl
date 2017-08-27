@@ -7,6 +7,7 @@ from ncm import config
 from ncm.api import CloudApi
 from ncm.downloader import download_song_by_id
 from ncm.downloader import download_song_by_song
+from ncm.downloader import format_string
 
 # load the config first
 config.load_config()
@@ -15,7 +16,7 @@ api = CloudApi()
 
 def download_hot_songs(artist_id):
     songs = api.get_hot_songs(artist_id)
-    folder_name = songs[0]['artists'][0]['name'] + ' - hot50'
+    folder_name = format_string(songs[0]['artists'][0]['name']) + ' - hot50'
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     download_count = config.DOWNLOAD_HOT_MAX if (0 < config.DOWNLOAD_HOT_MAX < 50) else config.DOWNLOAD_HOT_MAX_DEFAULT
     for i, song in zip(range(download_count), songs):
@@ -25,7 +26,7 @@ def download_hot_songs(artist_id):
 
 def download_album_songs(album_id):
     songs = api.get_album_songs(album_id)
-    folder_name = songs[0]['album']['name'] + ' - album'
+    folder_name = format_string(songs[0]['album']['name']) + ' - album'
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     for i, song in enumerate(songs):
         print(str(i + 1) + ' song name:' + song['name'])
@@ -34,7 +35,7 @@ def download_album_songs(album_id):
 
 def download_playlist_songs(playlist_id):
     songs, playlist_name = api.get_playlist_songs(playlist_id)
-    folder_name = playlist_name + ' - playlist'
+    folder_name = format_string(playlist_name) + ' - playlist'
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     for i, song in enumerate(songs):
         print(str(i + 1) + ' song name:' + song['name'])

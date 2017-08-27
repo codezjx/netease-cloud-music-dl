@@ -20,9 +20,9 @@ def download_song_by_song(song, download_folder, sub_folder=True):
     # get song info
     api = CloudApi()
     song_id = song['id']
-    song_name = re.sub(r'[\\/:*?"<>|]', ' ', song['name'])    # Replace illegal character with ' '
-    artist_name = song['artists'][0]['name']
-    album_name = song['album']['name']
+    song_name = format_string(song['name'])
+    artist_name = format_string(song['artists'][0]['name'])
+    album_name = format_string(song['album']['name'])
 
     # update song file name by config
     song_file_name = '{}.mp3'.format(song_name)
@@ -117,3 +117,10 @@ class ProgressBar(object):
             self.status = 'Downloaded:'
             self.end_str = '\n'
             print(self.__get_info(), end=self.end_str)
+
+
+def format_string(string):
+    """
+    Replace illegal character with ' '
+    """
+    return re.sub(r'[\\/:*?"<>|]', ' ', string)
