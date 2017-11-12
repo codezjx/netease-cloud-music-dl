@@ -38,7 +38,10 @@ def download_playlist_songs(playlist_id):
     folder_name = format_string(playlist_name) + ' - playlist'
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     for i, song in enumerate(songs):
-        print('{}: {}'.format(i + 1, song['name']))
+        try:
+            print('{}: {}'.format(i + 1, song['name']))
+        except:
+            print('{}: {}'.format(i + 1, song['name'].encode("GBK", 'ignore')))
         download_song_by_song(song, folder_path, False)
 
 
