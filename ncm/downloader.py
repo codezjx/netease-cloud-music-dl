@@ -7,6 +7,7 @@ import requests
 from ncm import config
 from ncm.api import CloudApi
 from ncm.file_util import add_metadata_to_song
+from ncm.file_util import resize_img
 
 
 def download_song_by_id(song_id, download_folder, sub_folder=True):
@@ -58,6 +59,9 @@ def download_song_by_song(song, download_folder, sub_folder=True):
     cover_url = song['album']['blurPicUrl']
     cover_file_name = 'cover_{}.jpg'.format(song_id)
     download_file(cover_url, cover_file_name, song_download_folder)
+
+    # resize cover
+    resize_img(os.path.join(song_download_folder, cover_file_name))
 
     # add metadata for song
     song_file_path = os.path.join(song_download_folder, song_file_name)

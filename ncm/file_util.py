@@ -2,6 +2,19 @@
 
 from mutagen.mp3 import MP3, HeaderNotFoundError
 from mutagen.id3 import ID3, APIC, TPE1, TIT2, TALB, error
+from PIL import Image
+
+
+def resize_img(file_path, max_size=(640, 640), quality=90):
+    try:
+        img = Image.open(file_path)
+    except IOError:
+        print('Can\'t open image:', file_path)
+        return
+
+    if img.size[0] > max_size[0] or img.size[1] > max_size[1]:
+        img.thumbnail(max_size, Image.ANTIALIAS)
+        img.save(file_path, quality=quality)
 
 
 def add_metadata_to_song(file_path, cover_path, song):

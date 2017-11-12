@@ -9,6 +9,7 @@ setup(
         'requests>=2.17.3',
         'pycrypto>=2.6.1',
         'mutagen>=1.38.0',
+        'Pillow>=4.3.0',
     ],
 
     entry_points={
