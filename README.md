@@ -17,7 +17,7 @@ $ git clone https://github.com/codezjx/netease-cloud-music-dl.git
 
 进入根目录，然后执行：
 ```bash
-$ python setup.py install
+$ python3 setup.py install
 ```
 
 最终显示以下log，表示顺利安装：
