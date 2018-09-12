@@ -7,7 +7,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'requests>=2.17.3',
-        'pycrypto>=2.6.1',
+        'pycryptodomex',
         'mutagen>=1.38.0',
         'Pillow>=4.3.0',
     ],
