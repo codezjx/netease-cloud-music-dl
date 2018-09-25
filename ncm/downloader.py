@@ -52,7 +52,10 @@ def download_song_by_song(song, download_folder, sub_folder=True):
         return
     is_already_download = download_file(song_url, song_file_name, song_download_folder)
     if is_already_download:
-        print('Mp3 file already download:', song_file_name)
+        try:
+            print('Mp3 file already download:', song_file_name)
+        except:
+            print('Mp3 file already download:', song_file_name.encode("GBK", 'ignore'))
         return
 
     # download cover
@@ -114,11 +117,17 @@ class ProgressBar(object):
         # Update progress if down size > 10k
         if (self.count - self.prev_count) > 10240:
             self.prev_count = self.count
-            print(self.__get_info(), end=self.end_str)
+            try:
+                print(self.__get_info(), end=self.end_str)
+            except:
+                print(self.__get_info().encode("GBK", 'ignore'), end=self.end_str)
         # Finish downloading
         if self.count >= self.total:
             self.end_str = '\n'
-            print(self.__get_info(), end=self.end_str)
+            try:
+                print(self.__get_info(), end=self.end_str)
+            except:
+                print(self.__get_info().encode("GBK", 'ignore'), end=self.end_str)
 
 
 def format_string(string):
