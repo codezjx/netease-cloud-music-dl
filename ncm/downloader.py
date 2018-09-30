@@ -57,6 +57,8 @@ def download_song_by_song(song, download_folder, sub_folder=True):
 
     # download cover
     cover_url = song['album']['blurPicUrl']
+    if cover_url is None:
+        cover_url = song['album']['picUrl']
     cover_file_name = 'cover_{}.jpg'.format(song_id)
     download_file(cover_url, cover_file_name, song_download_folder)
 
