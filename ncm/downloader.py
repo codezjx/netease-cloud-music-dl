@@ -127,4 +127,4 @@ def format_string(string):
     """
     Replace illegal character with ' '
     """
-    return re.sub(r'[\\/:*?"<>|]', ' ', string)
+    return re.sub(r'[\\/:*?"<>|\t]', ' ', string)
