@@ -14,8 +14,7 @@ def resize_img(file_path, max_size=(640, 640), quality=90):
 
     if img.size[0] > max_size[0] or img.size[1] > max_size[1]:
         img.thumbnail(max_size, Image.ANTIALIAS)
-        if img.format == 'PNG':
-            img = img.convert('RGB')
+        img = img.convert('RGB')
         img.save(file_path, quality=quality)
 
 
