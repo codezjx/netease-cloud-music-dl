@@ -10,10 +10,15 @@ from ncm.file_util import add_metadata_to_song
 from ncm.file_util import resize_img
 
 
-def download_song_by_id(song_id, download_folder, sub_folder=True):
-    # get song info
+def get_song_info_by_id(song_id):
     api = CloudApi()
     song = api.get_song(song_id)
+    return song
+
+
+def download_song_by_id(song_id, download_folder, sub_folder=True):
+    # get song info
+    song = get_song_info_by_id(song_id)
     download_song_by_song(song, download_folder, sub_folder)
 
 

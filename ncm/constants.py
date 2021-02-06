@@ -31,4 +31,4 @@ def get_artist_url(artist_id):
 
 
 def get_playlist_url(playlist_id):
-    return 'http://music.163.com/api/playlist/detail?id={}'.format(playlist_id)
+    return 'http://music.163.com/api/v6/playlist/detail?id={}'.format(playlist_id)
