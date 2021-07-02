@@ -9,10 +9,11 @@ from ncm.downloader import get_song_info_by_id
 from ncm.downloader import download_song_by_id
 from ncm.downloader import download_song_by_song
 from ncm.downloader import format_string
+from ncm.constants import headers
 
 # load the config first
 config.load_config()
-api = CloudApi()
+#api = CloudApi()
 
 
 def download_hot_songs(artist_id):
@@ -64,7 +65,12 @@ def main():
                         help='Download an album all songs by album_id')
     parser.add_argument('-p', metavar='playlist_id', dest='playlist_id',
                         help='Download a playlist all songs by playlist_id')
+    parser.add_argument('-ua', metavar='user_agent', dest='user_agent',
+                        help='Specify the User-Agent to be used when downloading')
     args = parser.parse_args()
+    if args.user_agent:
+        headers.update({'User-Agent':args.user_agent})
+        #api = CloudApi()
     if args.song_id:
         download_song_by_id(get_parse_id(args.song_id), config.DOWNLOAD_DIR)
     elif args.song_ids:
@@ -80,3 +86,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
