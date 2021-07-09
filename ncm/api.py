@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
+import time
 
 from ncm.encrypt import encrypted_request
 from ncm.constants import headers
@@ -23,7 +24,12 @@ class CloudApi(object):
 
         response = self.session.get(url, timeout=self.timeout)
         result = response.json()
-        if result['code'] != 200:
+        if result['code'] == 406:
+            print("Busy! retry after 20 seconds")
+            time.sleep(20)
+            response = self.session.get(url, timeout=self.timeout)
+            result = response.json()
+        if result['code'] != 200 and result['code'] !=406:
             print('Return {} when try to get {}'.format(result, url))
         else:
             return result
