@@ -24,12 +24,12 @@ class CloudApi(object):
 
         response = self.session.get(url, timeout=self.timeout)
         result = response.json()
-        if result['code'] == 406:
+        while result['code'] == 406:
             print("Busy! retry after 20 seconds")
             time.sleep(20)
             response = self.session.get(url, timeout=self.timeout)
             result = response.json()
-        if result['code'] != 200 and result['code'] !=406:
+        if result['code'] != 200:
             print('Return {} when try to get {}'.format(result, url))
         else:
             return result
@@ -98,6 +98,3 @@ class CloudApi(object):
         url = get_playlist_url(playlist_id)
         result = self.get_request(url)
         return result['playlist']['trackIds'], result['playlist']['name']
-
-
-
