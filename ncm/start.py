@@ -13,7 +13,7 @@ from ncm.constants import headers
 
 # load the config first
 config.load_config()
-#api = CloudApi()
+api = CloudApi()
 
 
 def download_hot_songs(artist_id):
@@ -70,7 +70,6 @@ def main():
     args = parser.parse_args()
     if args.user_agent:
         headers.update({'User-Agent':args.user_agent})
-        #api = CloudApi()
     if args.song_id:
         download_song_by_id(get_parse_id(args.song_id), config.DOWNLOAD_DIR)
     elif args.song_ids:
