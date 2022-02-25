@@ -13,7 +13,8 @@ headers = {
     'Host': 'music.163.com',
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36',
     'Referer': 'http://music.163.com',
-    'Cookie': 'appver=2.0.2; _ntes_nuid={};'.format(''.join(random.choice(string.ascii_letters + string.digits) for _ in range(32)))
+    'Cookie': 'appver=2.0.2; _ntes_nuid={}; NMTID={}'.format(''.join(random.choice(string.ascii_letters + string.digits) for _ in range(32)),
+                                                             ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(32)))
 }
 song_download_url = 'http://music.163.com/weapi/song/enhance/player/url?csrf_token='
 
