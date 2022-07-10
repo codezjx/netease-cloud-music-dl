@@ -56,7 +56,7 @@ def download_song_by_song(song, download_folder, sub_folder=True, program=False)
 
     # download song
     if program:
-        song_url = api.get_program_url(song)
+        song_url = api.get_program_url(song, level = "high")
     else:
         song_url = api.get_song_url(song_id)
 
@@ -70,12 +70,15 @@ def download_song_by_song(song, download_folder, sub_folder=True, program=False)
 
     # download cover
     if program:
-        cover_url = song['blurCoverUrl']
+        cover_url = song['coverUrl']
     else:
         cover_url = song['album']['coverUrl']
 
     if cover_url is None:
-        cover_url = song['album']['picUrl']
+        if program:
+            cover_url = song['mainSong']['album']['picUrl']
+        else:
+            cover_url = song['album']['picUrl']
     cover_file_name = 'cover_{}.jpg'.format(song_id)
     download_file(cover_url, cover_file_name, song_download_folder)
 
