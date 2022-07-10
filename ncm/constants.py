@@ -7,20 +7,24 @@ modulus = '00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7b725152b3
 nonce = '0CoJUm6Qyw8W8jud'
 pub_key = '010001'
 
-
 headers = {
     'Accept': '*/*',
     'Host': 'music.163.com',
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36',
     'Referer': 'http://music.163.com',
-    'Cookie': 'appver=2.0.2; _ntes_nuid={}; NMTID={}'.format(''.join(random.choice(string.ascii_letters + string.digits) for _ in range(32)),
-                                                             ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(32)))
+    'Cookie': 'appver=2.0.2; _ntes_nuid={}; NMTID={}'.format(
+        ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(32)),
+        ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(32)))
 }
 song_download_url = 'http://music.163.com/weapi/song/enhance/player/url?csrf_token='
-
+program_download_url = 'https://music.163.com/weapi/song/enhance/player/url/v1?csrf_token='
 
 def get_song_url(song_id):
     return 'http://music.163.com/api/song/detail/?ids=[{}]'.format(song_id)
+
+
+def get_program_url(program_id):
+    return 'https://music.163.com/weapi/dj/program/detail?csrf_token='
 
 
 def get_album_url(album_id):

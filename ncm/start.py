@@ -34,6 +34,13 @@ def download_album_songs(album_id):
         download_song_by_song(song, folder_path, False)
 
 
+def download_program(program_id):
+    program = api.get_program(program_id)
+    folder_name = format_string(program['dj']['brand']) + ' - album'
+    folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
+    download_song_by_song(program, folder_path, False, True)
+
+
 def download_playlist_songs(playlist_id):
     songs, playlist_name = api.get_playlist_songs(playlist_id)
     folder_name = format_string(playlist_name) + ' - playlist'
@@ -62,6 +69,8 @@ def main():
                         help='Download an artist hot 50 songs by artist_id')
     parser.add_argument('-a', metavar='album_id', dest='album_id',
                         help='Download an album all songs by album_id')
+    parser.add_argument('-dj', metavar='program_id', dest='program_id',
+                        help='Download a program by program_id')
     parser.add_argument('-p', metavar='playlist_id', dest='playlist_id',
                         help='Download a playlist all songs by playlist_id')
     args = parser.parse_args()
@@ -76,6 +85,11 @@ def main():
         download_album_songs(get_parse_id(args.album_id))
     elif args.playlist_id:
         download_playlist_songs(get_parse_id(args.playlist_id))
+    elif args.program_id:
+        download_program(get_parse_id(args.program_id))
+        #api.get_program_url(2507672491)
+        # api.get_program_url(350746079)
+        # api.get_song(1927252694)
 
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@ import requests
 import time
 
 from ncm.encrypt import encrypted_request
-from ncm.constants import headers
+from ncm.constants import headers, get_program_url, program_download_url
 from ncm.constants import song_download_url
 from ncm.constants import get_song_url
 from ncm.constants import get_album_url
@@ -52,8 +52,38 @@ class CloudApi(object):
         """
         url = get_song_url(song_id)
         result = self.get_request(url)
-
         return result['songs'][0]
+
+    def get_program(self, program_id):
+        """
+        Get program info by its id
+        :param bit_rate:
+        :param program_id:
+        :return:
+        """
+        url = get_program_url(program_id)
+        csrf = ''
+        result = self.post_request(url, {'id': program_id, 'csrf_token': csrf})
+        return result['program']
+
+    def get_program_url(self, program, encode_type="aac", level="standard"):
+        """
+        Get the download url of the program
+        :param program:
+        :param encode_type:
+        :param level:
+        :return:
+        """
+        id = program['mainSong']['id']
+        url = program_download_url
+        payload = {
+            'ids': [id],
+            'csrf_token': '',
+            'encodeType': encode_type,
+            'level': level
+        }
+        result = self.post_request(url, payload)
+        return result['data'][0]['url']
 
     def get_album_songs(self, album_id):
         """
