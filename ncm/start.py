@@ -87,9 +87,6 @@ def main():
         download_playlist_songs(get_parse_id(args.playlist_id))
     elif args.program_id:
         download_program(get_parse_id(args.program_id))
-        #api.get_program_url(2507672491)
-        # api.get_program_url(350746079)
-        # api.get_song(1927252694)
 
 
 if __name__ == '__main__':
