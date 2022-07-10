@@ -56,7 +56,7 @@ def download_song_by_song(song, download_folder, sub_folder=True, program=False)
 
     # download song
     if program:
-        song_url = api.get_program_url(song, level = "high")
+        song_url = api.get_program_url(song, level="standard")
     else:
         song_url = api.get_song_url(song_id)
 
