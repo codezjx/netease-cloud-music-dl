@@ -69,21 +69,13 @@ class CloudApi(object):
     def get_program_url(self, program, encode_type="aac", level="standard"):
         """
         Get the download url of the program
-        :param program:
+        :param program
         :param encode_type:
         :param level:
         :return:
         """
         id = program['mainSong']['id']
-        url = program_download_url
-        payload = {
-            'ids': [id],
-            'csrf_token': '',
-            'encodeType': encode_type,
-            'level': level
-        }
-        result = self.post_request(url, payload)
-        return result['data'][0]['url']
+        return self.get_song_url(id)
 
     def get_album_songs(self, album_id):
         """
