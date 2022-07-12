@@ -72,7 +72,7 @@ def download_song_by_song(song, download_folder, sub_folder=True, program=False)
     if program:
         cover_url = song['coverUrl']
     else:
-        cover_url = song['album']['coverUrl']
+        cover_url = song['album']['blurPicUrl']
 
     if cover_url is None:
         if program:

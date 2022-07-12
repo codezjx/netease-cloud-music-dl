@@ -36,7 +36,7 @@ def download_album_songs(album_id):
 
 def download_program(program_id):
     program = api.get_program(program_id)
-    folder_name = format_string(program['dj']['brand']) + ' - album'
+    folder_name = format_string(program['dj']['brand']) + ' - program'
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
     download_song_by_song(program, folder_path, False, True)
 
