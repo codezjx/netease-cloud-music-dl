@@ -22,13 +22,17 @@ def download_song_by_id(song_id, download_folder, sub_folder=True):
     download_song_by_song(song, download_folder, sub_folder)
 
 
-def download_song_by_song(song, download_folder, sub_folder=True):
+def download_song_by_song(song, download_folder, sub_folder=True, program=False):
     # get song info
     api = CloudApi()
     song_id = song['id']
     song_name = format_string(song['name'])
-    artist_name = format_string(song['artists'][0]['name'])
-    album_name = format_string(song['album']['name'])
+    if program:
+        artist_name = format_string(song['dj']['nickname'])
+        album_name = format_string(song['dj']['brand'])
+    else:
+        artist_name = format_string(song['artists'][0]['name'])
+        album_name = format_string(song['album']['name'])
 
     # update song file name by config
     song_file_name = '{}.mp3'.format(song_name)
@@ -51,7 +55,11 @@ def download_song_by_song(song, download_folder, sub_folder=True):
         song_download_folder = download_folder
 
     # download song
-    song_url = api.get_song_url(song_id)
+    if program:
+        song_url = api.get_program_url(song, level="standard")
+    else:
+        song_url = api.get_song_url(song_id)
+
     if song_url is None:
         print('Song <<{}>> is not available due to copyright issue!'.format(song_name))
         return
@@ -61,9 +69,16 @@ def download_song_by_song(song, download_folder, sub_folder=True):
         return
 
     # download cover
-    cover_url = song['album']['blurPicUrl']
+    if program:
+        cover_url = song['coverUrl']
+    else:
+        cover_url = song['album']['coverUrl']
+
     if cover_url is None:
-        cover_url = song['album']['picUrl']
+        if program:
+            cover_url = song['mainSong']['album']['picUrl']
+        else:
+            cover_url = song['album']['picUrl']
     cover_file_name = 'cover_{}.jpg'.format(song_id)
     download_file(cover_url, cover_file_name, song_download_folder)
 
@@ -73,14 +88,13 @@ def download_song_by_song(song, download_folder, sub_folder=True):
     # add metadata for song
     song_file_path = os.path.join(song_download_folder, song_file_name)
     cover_file_path = os.path.join(song_download_folder, cover_file_name)
-    add_metadata_to_song(song_file_path, cover_file_path, song)
+    add_metadata_to_song(song_file_path, cover_file_path, song, program)
 
     # delete cover file
     os.remove(cover_file_path)
 
 
 def download_file(file_url, file_name, folder):
-
     if not os.path.exists(folder):
         os.makedirs(folder)
     file_path = os.path.join(folder, file_name)
@@ -113,8 +127,8 @@ class ProgressBar(object):
         self.end_str = '\r'
 
     def __get_info(self):
-        return 'Progress: {:6.2f}%, {:8.2f}KB, [{:.30}]'\
-            .format(self.count/self.total*100, self.total/1024, self.file_name)
+        return 'Progress: {:6.2f}%, {:8.2f}KB, [{:.30}]' \
+            .format(self.count / self.total * 100, self.total / 1024, self.file_name)
 
     def refresh(self, count):
         self.count += count
