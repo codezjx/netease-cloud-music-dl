@@ -42,6 +42,18 @@ def download_program(program_id):
     download_song_by_song(program, folder_path, False, True)
 
 
+def download_radio_programs(radio_id):
+    programs = api.get_radio_programs(radio_id)
+    if not programs:
+        print('No programs found for radio id: {}'.format(radio_id))
+        return
+    folder_name = format_string((programs[0].get('radio') or {}).get('name', 'unknown')) + ' - radio'
+    folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
+    for i, program in enumerate(programs):
+        print('{}: {}'.format(i + 1, program['name']))
+        download_song_by_song(program, folder_path, False, True)
+
+
 def download_playlist_songs(playlist_id):
     songs, playlist_name = api.get_playlist_songs(playlist_id)
     folder_name = format_string(playlist_name) + ' - playlist'
@@ -72,6 +84,8 @@ def main():
                         help='Download an album all songs by album_id')
     parser.add_argument('-dj', metavar='program_id', dest='program_id',
                         help='Download a program by program_id')
+    parser.add_argument('-radio', metavar='radio_id', dest='radio_id',
+                        help='Download all programs from a DJ radio by radio_id')
     parser.add_argument('-p', metavar='playlist_id', dest='playlist_id',
                         help='Download a playlist all songs by playlist_id')
     parser.add_argument('-ua', metavar='user_agent', dest='user_agent',
@@ -92,6 +106,8 @@ def main():
         download_playlist_songs(get_parse_id(args.playlist_id))
     elif args.program_id:
         download_program(get_parse_id(args.program_id))
+    elif args.radio_id:
+        download_radio_programs(get_parse_id(args.radio_id))
 
 
 if __name__ == '__main__':

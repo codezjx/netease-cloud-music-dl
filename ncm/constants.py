@@ -37,3 +37,8 @@ def get_artist_url(artist_id):
 
 def get_playlist_url(playlist_id):
     return 'http://music.163.com/api/v6/playlist/detail?id={}'.format(playlist_id)
+
+
+def get_radio_url(radio_id, limit=100, offset=0):
+    return 'http://music.163.com/api/dj/program/byradio?asc=false&radioId={}&limit={}&offset={}'.format(
+        radio_id, limit, offset)

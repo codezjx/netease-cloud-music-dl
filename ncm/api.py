@@ -10,6 +10,7 @@ from ncm.constants import get_song_url
 from ncm.constants import get_album_url
 from ncm.constants import get_artist_url
 from ncm.constants import get_playlist_url
+from ncm.constants import get_radio_url
 
 
 class CloudApi(object):
@@ -120,3 +121,23 @@ class CloudApi(object):
         url = get_playlist_url(playlist_id)
         result = self.get_request(url)
         return result['playlist']['trackIds'], result['playlist']['name']
+
+    def get_radio_programs(self, radio_id):
+        """
+        Get all programs from a DJ radio by radio id
+        :param radio_id:
+        :return: A list of program objects from the radio.
+        """
+        programs = []
+        limit = 100
+        offset = 0
+        while True:
+            url = get_radio_url(radio_id, limit=limit, offset=offset)
+            result = self.get_request(url)
+            if result is None or 'programs' not in result:
+                break
+            programs.extend(result['programs'])
+            if not result.get('more', False):
+                break
+            offset += limit
+        return programs

@@ -42,6 +42,7 @@ Finished processing dependencies for netease-cloud-music-dl==x.x.x
 - 支持下载歌手热门单曲（可配置最大下载数）
 - 支持下载专辑所有歌曲
 - 支持下载公开歌单所有歌曲
+- 支持下载播客/电台所有节目
 
 **（注意：已下架的音乐暂时无法下载）**
 
@@ -97,6 +98,15 @@ $ ncm -hot http://music.163.com/#/artist?id=123123
 ### 下载某个公开的歌单
 
 使用参数`-p`，后加歌单id或者完整url，使用方法同上，必须确认是**公开**的歌单才能下载哦。
+
+### 下载某个播客/电台的节目
+
+使用参数`-radio`，后加播客/电台id或者完整url，如：
+```bash
+$ ncm -radio 123123
+or
+$ ncm -radio https://music.163.com/#/djradio?id=123123
+```
 
 ## Settings
 
