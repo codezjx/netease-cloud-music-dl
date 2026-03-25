@@ -46,18 +46,18 @@ class CloudApi(object):
             return result
 
     def get_song(self, song_id) -> dict | None:
+        """
+        Get song info by song id
+        :param song_id:
+        :return:
+        """
         try:
-            """
-            Get song info by song id
-            :param song_id:
-            :return:
-            """
             url = get_song_url(song_id)
             result = self.get_request(url)
-            if result.get('songs'):
+            if result and result.get('songs'):
                 return result['songs'][0]
         except Exception as e:
-            print(e)
+            print('Error getting song {}: {}'.format(song_id, e))
         return None
 
     def get_program(self, program_id):
