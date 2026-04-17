@@ -10,7 +10,7 @@ from ncm.file_util import add_metadata_to_song
 from ncm.file_util import resize_img
 
 
-def get_song_info_by_id(song_id):
+def get_song_info_by_id(song_id) -> dict | None:
     api = CloudApi()
     song = api.get_song(song_id)
     return song
@@ -19,10 +19,12 @@ def get_song_info_by_id(song_id):
 def download_song_by_id(song_id, download_folder, sub_folder=True):
     # get song info
     song = get_song_info_by_id(song_id)
-    download_song_by_song(song, download_folder, sub_folder)
+    if song:
+        download_song_by_song(song, download_folder, sub_folder)
+    else:
+        print('Song not found for song_id:', song_id)
 
-
-def download_song_by_song(song, download_folder, sub_folder=True, program=False):
+def download_song_by_song(song: dict, download_folder, sub_folder=True, program=False):
     # get song info
     api = CloudApi()
     song_id = song['id']
